@@ -263,9 +263,9 @@ footer strong{color:var(--yellow)}
       <div class="kpi-sub" id="k-fat-sub">Jan – Dez 2025</div>
     </div>
     <div class="kpi">
-      <div class="kpi-lbl">Vendas Unitárias</div>
+      <div class="kpi-lbl">Total de Pedidos</div>
       <div class="kpi-val" id="k-ped">44.788</div>
-      <div class="kpi-sub">itens vendidos</div>
+      <div class="kpi-sub">transações realizadas</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Ticket Médio</div>
@@ -343,7 +343,6 @@ footer strong{color:var(--yellow)}
 
   <!-- Loja selector -->
   <div class="loja-selector">
-<button class="loja-sel-btn active" id="loja-btn-TODAS" onclick="selectLoja('TODAS')">🏬 Todas as Lojas</button>
     <button class="loja-sel-btn active jk" id="loja-btn-JK" onclick="selectLoja('JK')">🏪 Unidade JK</button>
     <button class="loja-sel-btn pe"        id="loja-btn-PE" onclick="selectLoja('PE')">🏪 Unidade PE</button>
   </div>
@@ -356,7 +355,7 @@ footer strong{color:var(--yellow)}
       <div class="loja-kpi-sub">2025 completo</div>
     </div>
     <div class="loja-kpi" id="lkpi-2">
-      <div class="loja-kpi-lbl">Vendas Unitárias</div>
+      <div class="loja-kpi-lbl">Pedidos</div>
       <div class="loja-kpi-val" id="lkpi-ped">—</div>
       <div class="loja-kpi-sub">transações</div>
     </div>
@@ -471,7 +470,7 @@ footer strong{color:var(--yellow)}
             <th>#</th>
             <th>Empresa</th>
             <th>Faturamento</th>
-            <th>Vendas Unitárias</th>
+            <th>Pedidos</th>
             <th>Ticket Médio</th>
             <th>Recorrência</th>
             <th>Canal Principal</th>
@@ -530,8 +529,7 @@ function filteredSG(){    return D.sg.filter(matchSG); }
 function calcKPIs(rows){
   const fat = rows.reduce((a,r)=>a+r.Valor,0);
   const ped = rows.reduce((a,r)=>a+r.Pedidos,0);
-  return {fat, ped, compras: meses,
-        ticket: ped>0?fat/ped:0};
+  return {fat, ped, ticket: ped>0?fat/ped:0};
 }
 
 // ── CHARTS ──
@@ -855,7 +853,7 @@ update();
 
 // ── LOJAS DATA ──
 const DLOJAS = {"JK":{"total":2681660.45,"pedidos":27061,"clientes":3315,"ticket":99.1,"monthly":[248279.86,237327.99,211354.48,219079.44,258346.45,198631.02,233419.22,213952.89,250853.55,247788.98,204159.48,158467.09],"monthly_ped":[2660,2267,2178,2175,2425,2157,2391,2278,2426,2332,2043,1729],"canal":[{"Origem Venda":"Loja","Valor":1511064.52,"Pedidos":19114},{"Origem Venda":"TeleVendas","Valor":807673.68,"Pedidos":5068},{"Origem Venda":"Whatsapp","Valor":309392.81,"Pedidos":2273},{"Origem Venda":"Site","Valor":43217.81,"Pedidos":415},{"Origem Venda":"Merc. Livre","Valor":10311.63,"Pedidos":191}],"top_prods":[{"Nome Sub-Grupo":"PAPEL SULFITE E PAPEL A4","Valor":404152.31,"Pedidos":1646},{"Nome Sub-Grupo":"CARTUCHOS JATO ORIGINAIS","Valor":348747.09,"Pedidos":988},{"Nome Sub-Grupo":"REFIL PARA JATO DE TINTA","Valor":201463.87,"Pedidos":887},{"Nome Sub-Grupo":"ADAPT, CABOS,CONECT, RECEPT, ORG.CABOS E PRESILHAS","Valor":101694.28,"Pedidos":1066},{"Nome Sub-Grupo":"IMPRESSORAS, SCANNERS","Valor":92796.6,"Pedidos":73},{"Nome Sub-Grupo":"TECLADOS","Valor":71551.54,"Pedidos":424},{"Nome Sub-Grupo":"PILHAS, BATERIAS E CARREGADORES DE PILHA","Valor":62898.6,"Pedidos":772},{"Nome Sub-Grupo":"BOBINAS PARA PDV E FAX","Valor":61866.75,"Pedidos":392},{"Nome Sub-Grupo":"PASTAS, MALETAS, VISORES P/PASTA, FICHAR, PORT DOC","Valor":56496.45,"Pedidos":755},{"Nome Sub-Grupo":"TONER LASER COMPATIVEL","Valor":55259.69,"Pedidos":416}],"tipo":[{"Tipo Pessoa":"PF","Valor":1266668.28,"Pedidos":16333},{"Tipo Pessoa":"PJ","Valor":1414992.17,"Pedidos":10728}],"top_pj":[{"cod":23794,"nome":"SANDOZ DO BRASIL IND FARMACEUT LTDA","total":64393.5,"pedidos":81,"meses":12,"ticket":794.98,"canal":"TeleVendas"},{"cod":8012,"nome":"ELEVADORES ATLAS SCHINDLER S/A","total":44782.77,"pedidos":151,"meses":12,"ticket":296.57,"canal":"TeleVendas"},{"cod":53833,"nome":"Mori Ribeiro Servi\u00e7os De Engenharia","total":24180.6,"pedidos":31,"meses":12,"ticket":780.02,"canal":"Site"},{"cod":23596,"nome":"NOVARTIS BIOCIENCIAS S/A","total":21495.0,"pedidos":3,"meses":2,"ticket":7165.0,"canal":"TeleVendas"},{"cod":16445,"nome":"CRISTMA- MOVIMENTO CRISTO TE AMA","total":20864.5,"pedidos":10,"meses":3,"ticket":2086.45,"canal":"Loja"},{"cod":33535,"nome":"FRIGOLON FRIGORIFICO LTDA","total":20269.9,"pedidos":61,"meses":8,"ticket":332.29,"canal":"Whatsapp"},{"cod":34863,"nome":"BELA SEMENTES INSDUSTRIA E COMERCIO DE SE","total":16173.15,"pedidos":97,"meses":7,"ticket":166.73,"canal":"Loja"},{"cod":58365,"nome":"STI ELECTRIC - SOLUCOES TECNOLOGICAS LTDA","total":14256.0,"pedidos":9,"meses":6,"ticket":1584.0,"canal":"TeleVendas"},{"cod":19681,"nome":"FORTALEZA AGRO  MERCANTIL LTDA","total":12935.1,"pedidos":80,"meses":7,"ticket":161.69,"canal":"TeleVendas"},{"cod":15564,"nome":"UNIAO EQUIPAMENTOS RODOVIARIOS LTDA","total":11607.25,"pedidos":73,"meses":10,"ticket":159.0,"canal":"TeleVendas"},{"cod":58396,"nome":"LAVORO TEMPORARIO LTDA","total":11213.75,"pedidos":65,"meses":9,"ticket":172.52,"canal":"TeleVendas"},{"cod":23289,"nome":"IPIRANGA PRODUTOS DE PETROLEO SA","total":10905.1,"pedidos":66,"meses":9,"ticket":165.23,"canal":"Loja"},{"cod":21666,"nome":"CONSTANTINO E SENTINELLO LTDA","total":10640.25,"pedidos":50,"meses":5,"ticket":212.81,"canal":"Loja"},{"cod":19880,"nome":"J R F DE ANDRADE NETO IND E COM LTDA","total":10610.1,"pedidos":35,"meses":6,"ticket":303.15,"canal":"TeleVendas"},{"cod":25699,"nome":"BORGES COMERCIO DE PECAS AGRICOLAS  LTDA","total":10455.0,"pedidos":87,"meses":11,"ticket":120.17,"canal":"TeleVendas"}],"top_pf":[{"cod":1,"nome":"CONSUMIDOR FINAL","total":842170.02,"pedidos":11355,"meses":12,"ticket":74.17,"canal":"Loja"},{"cod":54473,"nome":"JUNIOR ZAMPAR","total":5922.0,"pedidos":12,"meses":3,"ticket":493.5,"canal":"Loja"},{"cod":6783,"nome":"SOLANGE ALBUQUERQUE DE SA","total":4141.0,"pedidos":10,"meses":5,"ticket":414.1,"canal":"TeleVendas"},{"cod":4320,"nome":"KLEISON REDIVO GRISOLIA","total":4101.4,"pedidos":14,"meses":4,"ticket":292.96,"canal":"Loja"},{"cod":44595,"nome":"LUIZ CARLOS MANGANOTTI","total":4088.4,"pedidos":14,"meses":7,"ticket":292.03,"canal":"TeleVendas"},{"cod":28947,"nome":"DIEGO TRAZINI","total":3714.8,"pedidos":44,"meses":8,"ticket":84.43,"canal":"TeleVendas"},{"cod":29024,"nome":"PATRICIA LEIKO FRANCA GOTO","total":3299.3,"pedidos":14,"meses":7,"ticket":235.66,"canal":"TeleVendas"},{"cod":59296,"nome":"Nicollas Matheus dos Santos","total":3194.4,"pedidos":2,"meses":1,"ticket":1597.2,"canal":"Whatsapp"},{"cod":15005,"nome":"MARCELO MARCONDES DO PRADO","total":2799.9,"pedidos":1,"meses":1,"ticket":2799.9,"canal":"Loja"},{"cod":14163,"nome":"LEANDRO JUN FUJII","total":2693.5,"pedidos":53,"meses":4,"ticket":50.82,"canal":"TeleVendas"},{"cod":28322,"nome":"MARIANO DE ALMEIDA MENEZES","total":2476.49,"pedidos":54,"meses":5,"ticket":45.86,"canal":"TeleVendas"},{"cod":5656,"nome":"ANTONIO MARCELO BARBANTES CASELLA","total":2369.6,"pedidos":5,"meses":4,"ticket":473.92,"canal":"TeleVendas"},{"cod":58618,"nome":"CELIA DE LIMA SILVA","total":2287.4,"pedidos":10,"meses":2,"ticket":228.74,"canal":"TeleVendas"},{"cod":51195,"nome":"Kamilla Riesy Naird Lima","total":2237.08,"pedidos":30,"meses":5,"ticket":74.57,"canal":"Site"},{"cod":7010,"nome":"OTAVIO ANGELIM RIGONI","total":2096.25,"pedidos":25,"meses":5,"ticket":83.85,"canal":"Loja"}]},"PE":{"total":1395890.63,"pedidos":17727,"clientes":1526,"ticket":78.74,"monthly":[132278.4,113608.88,115599.62,123385.86,121428.87,101707.61,122465.0,108366.86,113236.39,128417.23,108153.86,107242.05],"monthly_ped":[1592,1433,1445,1523,1508,1329,1489,1461,1478,1617,1408,1444],"canal":[{"Origem Venda":"Loja","Valor":1200413.72,"Pedidos":16391},{"Origem Venda":"Whatsapp","Valor":162041.51,"Pedidos":1041},{"Origem Venda":"TeleVendas","Valor":31926.4,"Pedidos":268},{"Origem Venda":"Site","Valor":1022.3,"Pedidos":25},{"Origem Venda":"Marketplace","Valor":321.8,"Pedidos":1},{"Origem Venda":"Merc. Livre","Valor":164.9,"Pedidos":1}],"top_prods":[{"Nome Sub-Grupo":"CARTUCHOS JATO ORIGINAIS","Valor":203888.28,"Pedidos":574},{"Nome Sub-Grupo":"PAPEL SULFITE E PAPEL A4","Valor":150845.87,"Pedidos":803},{"Nome Sub-Grupo":"REFIL PARA JATO DE TINTA","Valor":87879.34,"Pedidos":425},{"Nome Sub-Grupo":"ADAPT, CABOS,CONECT, RECEPT, ORG.CABOS E PRESILHAS","Valor":56536.08,"Pedidos":586},{"Nome Sub-Grupo":"PASTAS, MALETAS, VISORES P/PASTA, FICHAR, PORT DOC","Valor":39139.83,"Pedidos":506},{"Nome Sub-Grupo":"PILHAS, BATERIAS E CARREGADORES DE PILHA","Valor":38296.18,"Pedidos":527},{"Nome Sub-Grupo":"TECLADOS","Valor":37681.51,"Pedidos":248},{"Nome Sub-Grupo":"CANETAS ESFEROGRAFICAS, NANKIN, TINTA NANKIN, CORR","Valor":34367.96,"Pedidos":628},{"Nome Sub-Grupo":"BOBINAS PARA PDV E FAX","Valor":33024.05,"Pedidos":260},{"Nome Sub-Grupo":"FITAS ADESIVA, SUPORTES P/FITA ADESIVA E ADESIVOS","Valor":32197.79,"Pedidos":502}],"tipo":[{"Tipo Pessoa":"PF","Valor":990243.8,"Pedidos":13815},{"Tipo Pessoa":"PJ","Valor":405646.83,"Pedidos":3912}],"top_pj":[{"cod":21002,"nome":"DALLON PLASTICO LTDA","total":24296.65,"pedidos":111,"meses":9,"ticket":218.89,"canal":"Whatsapp"},{"cod":46826,"nome":"LCCP LABORATORIO DE ANALISES CLINICAS LTDA","total":19118.4,"pedidos":17,"meses":10,"ticket":1124.61,"canal":"Whatsapp"},{"cod":17637,"nome":"HUTEC FUND APOIO DES TEC H U R N PR","total":9475.9,"pedidos":52,"meses":11,"ticket":182.23,"canal":"Whatsapp"},{"cod":16204,"nome":"SERCOMTEL S/A TELECOMUNICACOES","total":7491.1,"pedidos":19,"meses":7,"ticket":394.27,"canal":"Whatsapp"},{"cod":25459,"nome":"DANITHAIS IND COM CONFEC LTDA","total":6935.0,"pedidos":22,"meses":6,"ticket":315.23,"canal":"Whatsapp"},{"cod":24017,"nome":"ATT ARMAZENAGEM TRANSP E TRANSB LTDA","total":6580.35,"pedidos":41,"meses":9,"ticket":160.5,"canal":"Whatsapp"},{"cod":16232,"nome":"ECOIMAGEM CLIN ULTRASONOGRAFIA S/S","total":6511.55,"pedidos":53,"meses":7,"ticket":122.86,"canal":"Loja"},{"cod":41923,"nome":"V S G FORNECIMENTO DE EQUIPAMENTOS HOSPITALARES LT","total":5443.7,"pedidos":65,"meses":8,"ticket":83.75,"canal":"Whatsapp"},{"cod":18707,"nome":"COPEL GERACAO E TRANSMISSAO S/A","total":5044.1,"pedidos":8,"meses":5,"ticket":630.51,"canal":"Loja"},{"cod":33428,"nome":"NBR PROPAGANDA SS LTDA","total":4492.85,"pedidos":18,"meses":5,"ticket":249.6,"canal":"Whatsapp"},{"cod":42967,"nome":"AERO MEDICA CLINICA MEDICA E ODONTOLIGICA ME","total":3834.6,"pedidos":39,"meses":10,"ticket":98.32,"canal":"TeleVendas"},{"cod":16571,"nome":"BIAGI E LUCHINI LTDA","total":3717.6,"pedidos":8,"meses":7,"ticket":464.7,"canal":"Whatsapp"},{"cod":20602,"nome":"BENEDETTI ADVOGADOS E ASSOCIADOS","total":3627.0,"pedidos":13,"meses":5,"ticket":279.0,"canal":"Whatsapp"},{"cod":58311,"nome":"PRODUSERV SERVICOS LTDA","total":3592.3,"pedidos":15,"meses":5,"ticket":239.49,"canal":"Loja"},{"cod":57462,"nome":"LACTALIS DO BRASIL - COMERCIO IMP EXP DE LATICINIO","total":3414.0,"pedidos":7,"meses":4,"ticket":487.71,"canal":"Whatsapp"}],"top_pf":[{"cod":1,"nome":"CONSUMIDOR FINAL","total":798500.33,"pedidos":11631,"meses":12,"ticket":68.65,"canal":"Loja"},{"cod":57106,"nome":"CELESTE CATORE","total":2882.5,"pedidos":2,"meses":2,"ticket":1441.25,"canal":"Loja"},{"cod":56953,"nome":"LUIZ ANTONIO BRAGA GIMENEZ","total":2340.3,"pedidos":5,"meses":3,"ticket":468.06,"canal":"Loja"},{"cod":55397,"nome":"JOSE AUGUSTO ARRUDA NETO","total":2082.5,"pedidos":4,"meses":1,"ticket":520.62,"canal":"Loja"},{"cod":57899,"nome":"GABRIELLA SCARLET DE OLIVEIRA","total":1770.0,"pedidos":1,"meses":1,"ticket":1770.0,"canal":"TeleVendas"},{"cod":6216,"nome":"ANTONIO GOMES","total":1699.9,"pedidos":1,"meses":1,"ticket":1699.9,"canal":"Loja"},{"cod":673,"nome":"LUIS AUGUSTO PRAZERES DE CASTRO","total":1630.25,"pedidos":19,"meses":4,"ticket":85.8,"canal":"Loja"},{"cod":58581,"nome":"MILTON MARQUES NOBREGA","total":1590.4,"pedidos":7,"meses":1,"ticket":227.2,"canal":"Loja"},{"cod":445,"nome":"JUVALDIR BILHAO","total":1535.7,"pedidos":6,"meses":6,"ticket":255.95,"canal":"Loja"},{"cod":4431,"nome":"JOAO CAZEMIRO WIELEWICKI","total":1492.7,"pedidos":2,"meses":1,"ticket":746.35,"canal":"Loja"},{"cod":58880,"nome":"JOSELI SOARES LIMA","total":1450.0,"pedidos":1,"meses":1,"ticket":1450.0,"canal":"Loja"},{"cod":13640,"nome":"HELIO AUGUSTO LOT","total":1332.0,"pedidos":1,"meses":1,"ticket":1332.0,"canal":"Loja"},{"cod":56239,"nome":"ADRIANA CORREIA ARAUJO DA SILVA","total":1326.37,"pedidos":48,"meses":8,"ticket":27.63,"canal":"Loja"},{"cod":33915,"nome":"WALDIR MARTINEZ ROSSI","total":1277.0,"pedidos":5,"meses":4,"ticket":255.4,"canal":"Whatsapp"},{"cod":13825,"nome":"GUSTAVO EDUARDO VITORINO","total":1265.3,"pedidos":10,"meses":5,"ticket":126.53,"canal":"TeleVendas"}]}};
-let currentLoja = 'TODAS';
+let currentLoja = 'JK';
 let cLojaMensal = null, cLojaCanal = null, cLojaTipo = null;
 
 function selectLoja(loja) {
@@ -867,19 +865,6 @@ function selectLoja(loja) {
 }
 
 function renderLojaTab() {
-
-let L;
-if(currentLoja === 'TODAS'){
-  L = {
-    total: DLOJAS.JK.total + DLOJAS.PE.total,
-    pedidos: DLOJAS.JK.pedidos + DLOJAS.PE.pedidos,
-    clientes: DLOJAS.JK.clientes + DLOJAS.PE.clientes,
-    ticket: (DLOJAS.JK.total + DLOJAS.PE.total) / (DLOJAS.JK.pedidos + DLOJAS.PE.pedidos)
-  };
-}else{
-  L = DLOJAS[currentLoja];
-}
-
   const L = DLOJAS[currentLoja];
   const isJK = currentLoja === 'JK';
   const accentColor = isJK ? 'rgba(26,90,173,.85)' : 'rgba(212,168,20,.85)';
