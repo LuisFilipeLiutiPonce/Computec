@@ -1346,7 +1346,7 @@ function processCSVData(rawRows) {
     pjDetailMap[k].top_prods[p] = (pjDetailMap[k].top_prods[p]||0) + r.Valor;
   });
 
-  D = { combo, pj_combo: pjCombo, pj: Object.values(pjDetailMap) };
+  D = { combo, sg: combo, pj_combo: pjCombo, pj: Object.values(pjDetailMap) };
   DLOJAS = buildDLojasFromCombo(combo);
 
   // Re-renderizar tudo
