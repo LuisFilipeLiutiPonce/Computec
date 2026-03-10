@@ -1058,4 +1058,169 @@ function renderLojaTab() {
     const pePJ = PE.tipo.find(r=>r["Tipo Pessoa"]==='PJ')?.Valor||0;
     const peTot = pePF+pePJ||1;
     document.getElementById('tipo-chart-wrap').innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%">
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">🏪 JK</div>
+          <canvas id="chartLojaTipoJK" style="max-height:160px;max-width:160px"></canvas>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:800;color:var(--yellow-dk);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">🏪 PE</div>
+          <canvas id="chartLojaTipoPE" style="max-height:160px;max-width:160px"></canvas>
+        </div>
+      </div>`;
+    cLojaTipoJK = new Chart(document.getElementById('chartLojaTipoJK').getContext('2d'), {
+      type:'doughnut',
+      data:{labels:['Pessoa Física','Pessoa Jurídica'],datasets:[{data:[jkPF,jkPJ],backgroundColor:['rgba(26,90,173,.85)','rgba(245,197,24,.85)'],borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
+      options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{family:'Barlow',weight:'600',size:10},padding:6}},tooltip:{callbacks:{label:ctx=>' '+fmtR(ctx.raw)+' ('+(ctx.raw/jkTot*100).toFixed(1)+'%)'}}}}
+    });
+    cLojaTipoPE = new Chart(document.getElementById('chartLojaTipoPE').getContext('2d'), {
+      type:'doughnut',
+      data:{labels:['Pessoa Física','Pessoa Jurídica'],datasets:[{data:[pePF,pePJ],backgroundColor:['rgba(26,90,173,.85)','rgba(245,197,24,.85)'],borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
+      options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{family:'Barlow',weight:'600',size:10},padding:6}},tooltip:{callbacks:{label:ctx=>' '+fmtR(ctx.raw)+' ('+(ctx.raw/peTot*100).toFixed(1)+'%)'}}}}
+    });
+    document.getElementById('loja-tipo-stats').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%">
+        <div style="display:flex;gap:1.2rem;justify-content:center">
+          <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">PF</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800">${fmtR(jkPF)}</div><div style="font-size:11px;color:var(--muted)">${(jkPF/jkTot*100).toFixed(1)}%</div></div>
+          <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">PJ</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800">${fmtR(jkPJ)}</div><div style="font-size:11px;color:var(--muted)">${(jkPJ/jkTot*100).toFixed(1)}%</div></div>
+        </div>
+        <div style="display:flex;gap:1.2rem;justify-content:center">
+          <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">PF</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800">${fmtR(pePF)}</div><div style="font-size:11px;color:var(--muted)">${(pePF/peTot*100).toFixed(1)}%</div></div>
+          <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">PJ</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800">${fmtR(pePJ)}</div><div style="font-size:11px;color:var(--muted)">${(pePJ/peTot*100).toFixed(1)}%</div></div>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('tipo-chart-wrap').innerHTML = '<canvas id="chartLojaTipo" style="max-height:220px;max-width:220px"></canvas>';
+    const pfVal = L.tipo.find(r=>r["Tipo Pessoa"]==='PF')?.Valor||0;
+    const pjVal = L.tipo.find(r=>r["Tipo Pessoa"]==='PJ')?.Valor||0;
+    const tipoTot = pfVal+pjVal||1;
+    cLojaTipo = new Chart(document.getElementById('chartLojaTipo').getContext('2d'), {
+      type:'doughnut',
+      data:{labels:['Pessoa Física','Pessoa Jurídica'],datasets:[{data:[pfVal,pjVal],backgroundColor:['rgba(26,90,173,.85)','rgba(245,197,24,.85)'],borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
+      options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{family:'Barlow',weight:'600',size:11},padding:8}},tooltip:{callbacks:{label:ctx=>' '+fmtR(ctx.raw)+' ('+(ctx.raw/tipoTot*100).toFixed(1)+'%)'}}} }
+    });
+    document.getElementById('loja-tipo-stats').innerHTML = `
+      <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">PF</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800">${fmtR(pfVal)}</div><div style="font-size:11px;color:var(--muted)">${(pfVal/tipoTot*100).toFixed(1)}%</div></div>
+      <div style="text-align:center"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">PJ</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800">${fmtR(pjVal)}</div><div style="font-size:11px;color:var(--muted)">${(pjVal/tipoTot*100).toFixed(1)}%</div></div>`;
+  }
+
+  // ── TOP PRODUTOS ──
+  function buildProdsHTML(prodsArr, accent) {
+    const prodMax = prodsArr[0]?.Valor||1;
+    return prodsArr.map((p,i) => {
+      const bw = (p.Valor/prodMax*100).toFixed(1);
+      const short = p["Nome Sub-Grupo"].length>38?p["Nome Sub-Grupo"].substring(0,38)+'…':p["Nome Sub-Grupo"];
+      return `<div class="prod-rank-row">
+        <span class="prod-idx">${i+1}</span>
+        <div style="flex:1;min-width:0">
+          <div class="prod-name" title="${p["Nome Sub-Grupo"]}">${short}</div>
+          <div style="height:5px;background:var(--bg);border-radius:3px;margin-top:4px;overflow:hidden">
+            <div style="height:100%;width:${bw}%;background:${accent};border-radius:3px"></div>
+          </div>
+        </div>
+        <span class="prod-val-r">${fmtR(p.Valor)}</span>
+      </div>`;
+    }).join('');
+  }
+  if (isGeral) {
+    document.getElementById('loja-prods').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 JK</div>
+          ${buildProdsHTML(JK.top_prods,'rgba(26,90,173,.85)')}
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--yellow-dk);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 PE</div>
+          ${buildProdsHTML(PE.top_prods,'rgba(212,168,20,.85)')}
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('loja-prods').innerHTML = buildProdsHTML(L.top_prods, accentColor);
+  }
+
+  // ── TOP PJ ──
+  function buildTopPjHTML(pjArr) {
+    return pjArr.map((c,i) => {
+      const rec = c.meses>=8?'<span class="tag-recorrente" style="font-size:10px">✓ Rec.</span>':'<span class="tag-pontual" style="font-size:10px">Pontual</span>';
+      const short = c.nome.length>28?c.nome.substring(0,28)+'…':c.nome;
+      return `<div class="cliente-row">
+        <span class="cli-rank">${i+1}</span>
+        <div class="cli-info">
+          <div class="cli-name" title="${c.nome}">${short}</div>
+          <div class="cli-meta">${rec} &nbsp;·&nbsp; ${c.pedidos} vend. &nbsp;·&nbsp; ${c.meses}/12 meses</div>
+        </div>
+        <span class="cli-val">${fmtR(c.total)}</span>
+      </div>`;
+    }).join('');
+  }
+  if (isGeral) {
+    document.getElementById('loja-top-pj').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 JK</div>
+          ${buildTopPjHTML(JK.top_pj)}
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--yellow-dk);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 PE</div>
+          ${buildTopPjHTML(PE.top_pj)}
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('loja-top-pj').innerHTML = L.top_pj.map((c,i) => {
+      const rec = c.meses>=8?'<span class="tag-recorrente" style="font-size:10px">✓ Recorrente</span>':'<span class="tag-pontual" style="font-size:10px">Pontual</span>';
+      const short = c.nome.length>32?c.nome.substring(0,32)+'…':c.nome;
+      return `<div class="cliente-row">
+        <span class="cli-rank">${i+1}</span>
+        <div class="cli-info">
+          <div class="cli-name" title="${c.nome}">${short}</div>
+          <div class="cli-meta">${rec} &nbsp;·&nbsp; ${c.pedidos} vend. &nbsp;·&nbsp; ${c.meses}/12 meses &nbsp;·&nbsp; ${c.canal}</div>
+        </div>
+        <span class="cli-val">${fmtR(c.total)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // ── TOP PF ──
+  function buildTopPfHTML(pfArr) {
+    return pfArr.map((c,i) => {
+      const short = c.nome.length>28?c.nome.substring(0,28)+'…':c.nome;
+      return `<div class="cliente-row">
+        <span class="cli-rank">${i+1}</span>
+        <div class="cli-info">
+          <div class="cli-name" title="${c.nome}">${short}</div>
+          <div class="cli-meta">${c.pedidos} vendas unit. &nbsp;·&nbsp; ${c.meses}/12 meses</div>
+        </div>
+        <span class="cli-val">${fmtR(c.total)}</span>
+      </div>`;
+    }).join('');
+  }
+  if (isGeral) {
+    document.getElementById('loja-top-pf').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 JK</div>
+          ${buildTopPfHTML(JK.top_pf)}
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--yellow-dk);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🏪 PE</div>
+          ${buildTopPfHTML(PE.top_pf)}
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('loja-top-pf').innerHTML = L.top_pf.map((c,i) => {
+      const short = c.nome.length>32?c.nome.substring(0,32)+'…':c.nome;
+      return `<div class="cliente-row">
+        <span class="cli-rank">${i+1}</span>
+        <div class="cli-info">
+          <div class="cli-name" title="${c.nome}">${short}</div>
+          <div class="cli-meta">${c.pedidos} vendas unit. &nbsp;·&nbsp; ${c.meses}/12 meses &nbsp;·&nbsp; TM: ${fmtR(c.ticket)} &nbsp;·&nbsp; ${c.canal}</div>
+        </div>
+        <span class="cli-val">${fmtR(c.total)}</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+</script>
+</body>
+</html>
